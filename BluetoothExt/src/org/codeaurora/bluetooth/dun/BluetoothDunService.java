@@ -257,7 +257,7 @@ public class BluetoothDunService extends Service {
     /**
      * String signifies the DUN profile status
      */
-    public static final String BLUETOOTH_DUN_PROFILE_STATUS = "bluetooth.dun.status";
+    public static final String BLUETOOTH_DUN_PROFILE_STATUS = "vendor.bluetooth.dun.status";
 
     public static final ParcelUuid DUN = ParcelUuid.fromString(DUN_UUID);
 
@@ -702,6 +702,10 @@ public class BluetoothDunService extends Service {
             } catch (IOException e) {
                 Log.e(TAG, "Error create RfcommListenSocket " + e.toString());
                 initRfcommSocketOK = false;
+            } catch (SecurityException e) {
+                Log.e(TAG, "initRfcommServerSocket failed " + e.toString());
+                initRfcommSocketOK = false;
+                break;
             }
             if (!initRfcommSocketOK) {
                 // Need to break out of this loop if BT is being turned off.
@@ -730,7 +734,7 @@ public class BluetoothDunService extends Service {
         }
 
         if (initRfcommSocketOK) {
-            if (VERBOSE) Log.v(TAG, "Succeed to create listening socket ");
+            Log.d(TAG, "Succeed to create listening socket ");
 
         } else {
             Log.e(TAG, "Error to create listening socket after " + CREATE_RETRY_TIME + " try");
