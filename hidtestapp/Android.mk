@@ -2,7 +2,7 @@ ifneq ($(TARGET_HAS_LOW_RAM), true)
 LOCAL_PATH:= $(call my-dir)
 include $(CLEAR_VARS)
 
-LOCAL_MODULE_TAGS := debug
+LOCAL_MODULE_TAGS := optional
 src_dirs:= src/org/codeaurora/bluetooth/hidtestapp \
 
 LOCAL_SRC_FILES := \
