@@ -124,7 +124,7 @@ public class AvrcpTestActivity extends MonkeyActivity implements OnClickListener
         setContentView(R.layout.layout_avrcp);
         Log.i(TAG, "onCreate ");
         mBtnPlayPause = (Button) findViewById(R.id.id_btn_play_pause);
-        mBtnPlayPause.setText(STATUS_PAUSE);
+        mBtnPlayPause.setText(STATUS_PLAY);
         mBtnPlayPause.setOnClickListener(this);
         mContext = getApplicationContext();
         mAdapter.getProfileProxy(getApplicationContext(), mAvrcpControllerServiceListener,
