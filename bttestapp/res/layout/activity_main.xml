@@ -110,7 +110,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_base_margin"
         android:onClick="showAvrcpActivity"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/showavrcp" />
     <Button
         android:layout_width="match_parent"

@@ -51,4 +51,39 @@
         android:textColor="#d41709"
         android:textSize="44sp"
         android:textStyle="bold" />
+    <Button
+        android:id="@+id/id_btn_disconnect_bip"
+        style="@style/textview_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/disconnectBip" />
+    <Button
+        android:id="@+id/id_btn_connect_bip"
+        style="@style/textview_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/connectBip" />
+    <Button
+        android:id="@+id/id_btn_set_browsed_player"
+        style="@style/textview_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/setBrowsedPlayer" />
+    <Button
+        android:id="@+id/id_btn_get_folder_items"
+        style="@style/textview_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/getFolderItems" />
+    <Button
+        android:id="@+id/id_btn_change_path"
+        style="@style/textview_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:text="@string/changePath" />
 </LinearLayout>

@@ -32,6 +32,7 @@ package org.codeaurora.bluetooth.bttestapp;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothAvrcpController;
+import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothProfile;
 import android.bluetooth.BluetoothProfile.ServiceListener;
 import android.content.BroadcastReceiver;
@@ -56,12 +57,25 @@ import android.media.session.MediaSession;
 import android.media.session.MediaSession.QueueItem;
 import android.widget.TextClock;
 
+import java.util.List;
+
 public class AvrcpTestActivity extends Activity implements OnClickListener {
 
     private final String TAG = "BtTestAvrcp";
     private Button mBtnPlayPause;
+    private Button mBtnDisconnectBip;
+    private Button mBtnConnectBip;
+    private Button mBtnGetFolderItems;
+    private Button mBtnSetBrowsedPlayer;
+    private Button mBtnChangePath;
     private final String STATUS_PLAY = "play";
     private final String STATUS_PAUSE = "pause";
+
+    static final int MSG_DISCONNECT_BIP = 600;
+    static final int MSG_CONNECT_BIP = 601;
+    static final int MSG_SET_BROWSED_PLAYER = 602;
+    static final int MSG_GET_FOLDERITMES = 603;
+    static final int MSG_CHANGE_PATH = 604;
 
     private static final String ACTION_TRACK_EVENT =
             "android.bluetooth.avrcp-controller.profile.action.TRACK_EVENT";
@@ -126,6 +140,16 @@ public class AvrcpTestActivity extends Activity implements OnClickListener {
         mBtnPlayPause = (Button) findViewById(R.id.id_btn_play_pause);
         mBtnPlayPause.setText(STATUS_PLAY);
         mBtnPlayPause.setOnClickListener(this);
+        mBtnDisconnectBip = (Button) findViewById(R.id.id_btn_disconnect_bip);
+        mBtnDisconnectBip.setOnClickListener(this);
+        mBtnConnectBip = (Button) findViewById(R.id.id_btn_connect_bip);
+        mBtnConnectBip.setOnClickListener(this);
+        mBtnSetBrowsedPlayer = (Button) findViewById(R.id.id_btn_set_browsed_player);
+        mBtnSetBrowsedPlayer.setOnClickListener(this);
+        mBtnChangePath= (Button) findViewById(R.id.id_btn_change_path);
+        mBtnChangePath.setOnClickListener(this);
+        mBtnGetFolderItems= (Button) findViewById(R.id.id_btn_get_folder_items);
+        mBtnGetFolderItems.setOnClickListener(this);
         mContext = getApplicationContext();
         mAdapter.getProfileProxy(getApplicationContext(), mAvrcpControllerServiceListener,
                 BluetoothProfile.AVRCP_CONTROLLER);
@@ -168,10 +192,46 @@ public class AvrcpTestActivity extends Activity implements OnClickListener {
 
     @Override
     public void onClick(View v) {
+        if (v == mBtnPlayPause ) {
         Log.i(TAG," time :"+te.getText());
         mBtnPlayPause.setEnabled(false);
         sendCommand();
         mBtnPlayPause.setEnabled(true);
+        } else if (v == mBtnDisconnectBip ) {
+            List<BluetoothDevice> devs = mAvrcpController.getConnectedDevices();
+            Log.d(TAG, "disconnectBip");
+            for (BluetoothDevice device : devs) {
+                mAvrcpController.sendGroupNavigationCmd(device, MSG_DISCONNECT_BIP, 0 );
+            }
+        } else if (v == mBtnConnectBip ) {
+            List<BluetoothDevice> devs = mAvrcpController.getConnectedDevices();
+            Log.d(TAG, "connectBip");
+            for (BluetoothDevice device : devs) {
+                Log.d(TAG, "send connectBip");
+                mAvrcpController.sendGroupNavigationCmd(device, MSG_CONNECT_BIP, 0);
+            }
+        } else if (v == mBtnSetBrowsedPlayer ) {
+            List<BluetoothDevice> devs = mAvrcpController.getConnectedDevices();
+            Log.d(TAG, "setBrowsedPlayer");
+            for (BluetoothDevice device : devs) {
+                Log.d(TAG, "send setBrowsedPlayer");
+                mAvrcpController.sendGroupNavigationCmd(device, MSG_SET_BROWSED_PLAYER, 0);
+            }
+        } else if (v == mBtnGetFolderItems) {
+            List<BluetoothDevice> devs = mAvrcpController.getConnectedDevices();
+            Log.d(TAG, "getFolderItmes");
+            for (BluetoothDevice device : devs) {
+                Log.d(TAG, "send getFolderItmes");
+                mAvrcpController.sendGroupNavigationCmd(device, MSG_GET_FOLDERITMES, 0);
+            }
+        } else if (v == mBtnChangePath) {
+            List<BluetoothDevice> devs = mAvrcpController.getConnectedDevices();
+            Log.d(TAG, "changePath");
+            for (BluetoothDevice device : devs) {
+                Log.d(TAG, "send changePath");
+                mAvrcpController.sendGroupNavigationCmd(device, MSG_CHANGE_PATH, 0);
+            }
+        }
     }
 
     private void sendCommand() {
