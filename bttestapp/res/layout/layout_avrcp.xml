@@ -33,7 +33,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
-
+    <Button
+        android:id="@+id/id_btn_get_item_attr"
+        style="@style/textview_normal"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        />
     <Button
         android:id="@+id/id_btn_play_pause"
         style="@style/textview_normal"

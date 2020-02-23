@@ -68,14 +68,17 @@ public class AvrcpTestActivity extends Activity implements OnClickListener {
     private Button mBtnGetFolderItems;
     private Button mBtnSetBrowsedPlayer;
     private Button mBtnChangePath;
+    private Button mBtnGetItemAttr;
     private final String STATUS_PLAY = "play";
     private final String STATUS_PAUSE = "pause";
+    private final String STATUS_GET_ITEM_ATTR = "get Item Attr";
 
     static final int MSG_DISCONNECT_BIP = 600;
     static final int MSG_CONNECT_BIP = 601;
     static final int MSG_SET_BROWSED_PLAYER = 602;
     static final int MSG_GET_FOLDERITMES = 603;
     static final int MSG_CHANGE_PATH = 604;
+    static final int MSG_GET_ITEM_ATTR= 605;
 
     private static final String ACTION_TRACK_EVENT =
             "android.bluetooth.avrcp-controller.profile.action.TRACK_EVENT";
@@ -150,6 +153,9 @@ public class AvrcpTestActivity extends Activity implements OnClickListener {
         mBtnChangePath.setOnClickListener(this);
         mBtnGetFolderItems= (Button) findViewById(R.id.id_btn_get_folder_items);
         mBtnGetFolderItems.setOnClickListener(this);
+        mBtnGetItemAttr = (Button) findViewById(R.id.id_btn_get_item_attr);
+        mBtnGetItemAttr.setText(STATUS_GET_ITEM_ATTR);
+        mBtnGetItemAttr.setOnClickListener(this);
         mContext = getApplicationContext();
         mAdapter.getProfileProxy(getApplicationContext(), mAvrcpControllerServiceListener,
                 BluetoothProfile.AVRCP_CONTROLLER);
@@ -230,6 +236,13 @@ public class AvrcpTestActivity extends Activity implements OnClickListener {
             for (BluetoothDevice device : devs) {
                 Log.d(TAG, "send changePath");
                 mAvrcpController.sendGroupNavigationCmd(device, MSG_CHANGE_PATH, 0);
+            }
+        } else if (v == mBtnGetItemAttr) {
+            List<BluetoothDevice> devs = mAvrcpController.getConnectedDevices();
+            Log.d(TAG, "getItemAttr");
+            for (BluetoothDevice device : devs) {
+                Log.d(TAG, "send getItemAttr");
+                mAvrcpController.sendGroupNavigationCmd(device, MSG_GET_ITEM_ATTR, 0);
             }
         }
     }
