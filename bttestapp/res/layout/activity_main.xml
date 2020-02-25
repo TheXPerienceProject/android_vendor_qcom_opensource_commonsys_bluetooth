@@ -95,6 +95,11 @@
                 style="@style/textview_normal"
                 android:onClick="onRadioButtonClicked"
                 android:text="@string/a2dp_sink" />
+            <RadioButton
+                android:id="@+id/id_a2dp_concurrency"
+                style="@style/textview_normal"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/a2dp_concurrency" />
         </RadioGroup>
     </LinearLayout>
     <Button

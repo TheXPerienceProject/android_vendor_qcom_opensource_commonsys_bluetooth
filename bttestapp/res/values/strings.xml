@@ -53,8 +53,9 @@
     <string name="discover_services">Discover</string>
     <string name="clear">Clear</string>
     <string name="list_empty">No records found!</string>
-    <string name="a2dp_source">A2DP Source</string>
-    <string name="a2dp_sink">A2DP Sink</string>
+    <string name="a2dp_source">SRC</string>
+    <string name="a2dp_sink">SNK</string>
+    <string name="a2dp_concurrency">SRC+SNK</string>
     <string name="a2dp_role">A2DP Role</string>
 
     <!-- Titles -->
