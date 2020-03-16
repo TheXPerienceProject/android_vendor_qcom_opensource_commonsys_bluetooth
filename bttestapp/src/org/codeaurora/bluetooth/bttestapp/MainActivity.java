@@ -79,7 +79,7 @@ public class MainActivity extends Activity {
 
     private boolean mDiscoveryInProgress = false;
     private BluetoothAdapter mBtAdapter;
-    private Button mBtnDiscoverService, mBtnSelectDevice, mSinkButton, mSourceButton, mAvrcpButton;
+    private Button mBtnDiscoverService, mBtnSelectDevice, mSinkButton, mSourceButton, mAvrcpButton, mConcurrencyButton;
     private static long current_time, switch_time;
     private ListView mLvServices;
     private ArrayList<String> mListUuid = new ArrayList<String>();
@@ -88,6 +88,8 @@ public class MainActivity extends Activity {
     private final String UUID_AUDIO_SOURCE = "0000110A-0000-1000-8000-00805F9B34FB";
     private final String UUID_AUDIO_SINK = "0000110B-0000-1000-8000-00805F9B34FB";
     private final String KEY_A2DP_SINK = "persist.vendor.service.bt.a2dp.sink";
+    private final String KEY_A2DP_SINK_CONN = "persist.vendor.bt.a2dp.sink_conn";
+    private final String KEY_A2DP_CONCURRENCY= "persist.vendor.service.bt.a2dp_concurrency";
 
     private final BroadcastReceiver mPickerReceiver = new BroadcastReceiver() {
 
@@ -148,6 +150,7 @@ public class MainActivity extends Activity {
                    Log.d(TAG, "Time for BT OFF->ON : " + (current_time - switch_time) + " ms");
                    mSinkButton.setEnabled(true);
                    mSourceButton.setEnabled(true);
+                   mConcurrencyButton.setEnabled(true);
                }
 
            } else if (action.equals(BluetoothA2dpSink.ACTION_CONNECTION_STATE_CHANGED)) {
@@ -219,6 +222,7 @@ public class MainActivity extends Activity {
         mBtnSelectDevice = (Button) findViewById(R.id.select_device);
         mSinkButton = (Button) findViewById(R.id.id_a2dp_sink);
         mSourceButton = (Button) findViewById(R.id.id_a2dp_source);
+        mConcurrencyButton = (Button) findViewById(R.id.id_a2dp_concurrency);
         mAvrcpButton = (Button) findViewById(R.id.id_btn_show_avrcp);
         mLvServices =(ListView)findViewById(R.id.id_lv_services);
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -304,27 +308,41 @@ public class MainActivity extends Activity {
     public void onRadioButtonClicked(View v) {
         switch_time = System.currentTimeMillis();
         boolean isA2dpSinkEnabled = SystemProperties.getBoolean(KEY_A2DP_SINK, false);
+        boolean isA2dpConcurrencyEnabled = SystemProperties.getBoolean(KEY_A2DP_CONCURRENCY, false);
 
         // Switch role to A2DP Source
         if (v.getId() == R.id.id_a2dp_source) {
-            if (!isA2dpSinkEnabled) {
+            if (!isA2dpSinkEnabled && !isA2dpConcurrencyEnabled) {
                 Log.d(TAG, "Already in Source role, ignore user action ignored");
                 return;
             }
             Log.d(TAG, "Switch role to A2DP Source");
             SystemProperties.set(KEY_A2DP_SINK, false + "");
+            SystemProperties.set(KEY_A2DP_CONCURRENCY, false + "");
 
         // Switch role to A2DP Sink
         } else if (v.getId() == R.id.id_a2dp_sink) {
-            if (isA2dpSinkEnabled) {
+            if (isA2dpSinkEnabled && !isA2dpConcurrencyEnabled) {
                 Log.d(TAG, "Already in A2DP Sink role, user action ignored");
                 return;
             }
             Log.d(TAG, "Switch role to A2DP Sink");
+            SystemProperties.set(KEY_A2DP_CONCURRENCY, false + "");
             SystemProperties.set(KEY_A2DP_SINK, true + "");
+            SystemProperties.set(KEY_A2DP_SINK_CONN, "2");
+        } else if (v.getId() == R.id.id_a2dp_concurrency) {
+            if (isA2dpConcurrencyEnabled) {
+                Log.d(TAG, "Already in A2DP concurrency mode, user action ignored");
+                return;
+            }
+            Log.d(TAG, "Switch role to A2DP Concurrency");
+            SystemProperties.set(KEY_A2DP_SINK, false + "");
+            SystemProperties.set(KEY_A2DP_CONCURRENCY, true + "");
+            SystemProperties.set(KEY_A2DP_SINK_CONN, "2");
         }
         mSinkButton.setEnabled(false);
         mSourceButton.setEnabled(false);
+        mConcurrencyButton.setEnabled(false);
 
         // Turn BT OFF and ON in order to reflect property change
         if (mBtAdapter.isEnabled())

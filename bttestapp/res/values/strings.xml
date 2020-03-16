@@ -53,8 +53,9 @@
     <string name="discover_services">Discover</string>
     <string name="clear">Clear</string>
     <string name="list_empty">No records found!</string>
-    <string name="a2dp_source">A2DP Source</string>
-    <string name="a2dp_sink">A2DP Sink</string>
+    <string name="a2dp_source">SRC</string>
+    <string name="a2dp_sink">SNK</string>
+    <string name="a2dp_concurrency">SRC+SNK</string>
     <string name="a2dp_role">A2DP Role</string>
 
     <!-- Titles -->
@@ -68,6 +69,11 @@
        <!-- AVRCP -->
     <string name="showavrcp">Show Avrcp Activity</string>
     <string name="config">Set Values</string>
+    <string name="disconnectBip">disconnect Bip</string>
+    <string name="connectBip">connect Bip</string>
+    <string name="setBrowsedPlayer">set browsed player</string>
+    <string name="getFolderItems">get folderItmes</string>
+    <string name="changePath">change path</string>
     <string name="base_values">Set default values</string>
     <string name="avrcp_cover_art">Cover Art</string>
     <string name="max_size">Max Size</string>

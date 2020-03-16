@@ -95,6 +95,11 @@
                 style="@style/textview_normal"
                 android:onClick="onRadioButtonClicked"
                 android:text="@string/a2dp_sink" />
+            <RadioButton
+                android:id="@+id/id_a2dp_concurrency"
+                style="@style/textview_normal"
+                android:onClick="onRadioButtonClicked"
+                android:text="@string/a2dp_concurrency" />
         </RadioGroup>
     </LinearLayout>
     <Button
@@ -110,7 +115,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/activity_base_margin"
         android:onClick="showAvrcpActivity"
-        android:enabled="false"
+        android:enabled="true"
         android:text="@string/showavrcp" />
     <Button
         android:layout_width="match_parent"
